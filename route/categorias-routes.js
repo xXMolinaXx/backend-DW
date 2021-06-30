@@ -27,6 +27,25 @@ router.get('/', (req, res) => {
     })
 })
 
+//--ELIMINAR CATEGORIA
+router.delete('/:id', (req, res) => {
+    categoria.remove({ _id: req.params.id }).then(res2 => { res.json(res2) });
+})
+
+//----ACTUALIZAR CATEGORIA
+router.put('/:id', (req, res) => {
+    categoria.update({
+        _id: req.params.id
+    }, {
+        nombre: req.body.nombre,
+        apellido: req.body.apellido,
+        correo: req.body.correo,
+        contrasena: req.body.contrasena
+    }).then(res2 => {
+        res.json(res2);
+    })
+})
+
 
 
 
