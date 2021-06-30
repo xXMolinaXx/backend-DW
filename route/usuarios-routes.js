@@ -4,8 +4,8 @@ var usuarios = require('../models/usuario');
 var mongoose = require('mongoose');
 
 
-
-//-----------------------------------------------------------------------------------agregar un usuarios
+//-----------------------------------------------------------------------------------CRUD USUARIOS
+//-----------------------------------------------------------------------------------CREAR USUARIO
 router.post('/', (req, res) => {
     let u = new usuarios({
         nombre: req.body.nombre,
@@ -38,7 +38,7 @@ router.post('/entrar', (req, res) => {
     })
 })
 
-//----------------------------------------------------------------------------------obtener a todos los usuarioss
+//----------------------------------------------------------------------------------LEER USUARIOS
 
 router.get('/', (req, res) => {
     usuarios.find().then(result => {
@@ -46,7 +46,7 @@ router.get('/', (req, res) => {
     })
 })
 
-//--------------------------------------------------------------obtener un usuarios
+//---------------------------------------------------------------------------------LEER UN USUARIO
 
 router.get('/:id', (req, res) => {
     usuarios.find({ _id: req.params.id }).then(result => {

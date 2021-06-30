@@ -3,9 +3,9 @@ var router = express.Router();
 var categoria = require('../models/categoria');
 var mongoose = require('mongoose');
 
-
-
-//-----------------------------------------------agregar una categoria
+/////////////////////////////////////////////////////////
+//----CRUD CATEGORIAS
+//----CREAR CATEGORIA
 router.post('/', (req, res) => {
     let u = new categoria({
         nombre: req.body.nombre,
@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
     })
 })
 
-//------------------------------------------------obtener a todos los categorias
+//----LEER CATEGORIAS
 
 router.get('/', (req, res) => {
     categoria.find().then(result => {
@@ -33,31 +33,33 @@ router.get('/', (req, res) => {
 
 
 ///////////////////////////////////////////////////////
-//aqui se gestiona todo lo que tiene que ver con empresas
-//---------------------------agregar comercio
+//----CRUD COMERCIOS
+//----CREAR COMERCIO
 router.post('/:idCategoria/comercios', (req, res) => {
-        categoria.updateOne({
-            _id: mongoose.Types.ObjectId(req.params.idCategoria)
-        }, {
-            $push: {
-                comercios: {
-                    _id: mongoose.Types.ObjectId(),
-                    nombre: req.body.nombre,
-                    urlImagen: req.body.imagen,
-                    logo: req.body.logo,
-                    descripcion: req.body.descripcion,
-                    productos: []
-                }
+    categoria.updateOne({
+        _id: mongoose.Types.ObjectId(req.params.idCategoria)
+    }, {
+        $push: {
+            comercios: {
+                _id: mongoose.Types.ObjectId(),
+                nombre: req.body.nombre,
+                urlImagen: req.body.imagen,
+                logo: req.body.logo,
+                descripcion: req.body.descripcion,
+                productos: []
             }
-        }).then(result => {
-            res.send(result);
-            res.end();
-        }).catch(error => {
-            res.send(error);
-            res.end();
-        });
-    })
-    //OBTENER comercios
+        }
+    }).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
+})
+
+//----LEERCOMERCIOS
+
 router.get('/comercios/:idCategoria', (req, res) => {
     categoria.find({ _id: mongoose.Types.ObjectId(req.params.idCategoria) })
         .then(result => {
@@ -65,7 +67,9 @@ router.get('/comercios/:idCategoria', (req, res) => {
         })
 })
 
-//---------obtener productos de comercios
+/////////////////////////////////////////////////////////////////////////
+//----CRUD PRODUCTOS
+//----LEER PRODUCTOS
 router.get('/:idCategoria/productos/:idEmpresa', (req, res) => {
     categoria.find({
             _id: req.params.idCategoria,
@@ -77,7 +81,7 @@ router.get('/:idCategoria/productos/:idEmpresa', (req, res) => {
         .catch()
 })
 
-//--------agregar productos
+//----CREAR PRODUCTO
 
 router.post('/:idCategoria/productos/:idComercio', (req, res) => {
     categoria.updateOne({
