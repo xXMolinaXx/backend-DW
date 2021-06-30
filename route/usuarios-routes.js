@@ -11,7 +11,9 @@ router.post('/', (req, res) => {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
         correo: req.body.correo,
-        contrasena: req.body.contrasena
+        contrasena: req.body.contrasena,
+        tipoUsuario: req.body.tipoUsuario,
+        pedidos: []
     })
     u.save().then((res2) => {
         res.json(res2);
@@ -21,7 +23,7 @@ router.post('/', (req, res) => {
 
 //--------------------------------------------verificar si el usuario existe
 router.post('/entrar', (req, res) => {
-    usuarios.find({ correo: req.body.correo, contrasena: req.body.contrasena }).then(result => {
+    usuarios.find({ correo: req.body.correo, contrasena: req.body.contrasena, tipoUsuario: req.body.tipoUsuario }).then(result => {
         console.log(result)
         if (result[0].correo == req.body.correo) {
             console.log(result[0].correo);
